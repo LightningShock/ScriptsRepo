@@ -1,0 +1,15 @@
+{
+  "name": "dig-ws",
+  "version": "0.0.1",
+  "description": "WS Dig game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lightning_shock",
+  "license": "",
+  "dependencies": {
+    "ws": "^1.0.1"
+  },
+  "devDependencies": {}
+}
