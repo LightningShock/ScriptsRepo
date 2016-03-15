@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LightningShock's MPP script
 // @namespace    http://www.lightningshockscript.tk/
-// @version      0.10
+// @version      0.10.1
 // @description  MPP ~Script
 // @author       LightningShock
 // @updateURL    https://raw.githubusercontent.com/Youtubrer/ScriptsRepo/master/Scripts/MPP/LightningSS.meta.js
@@ -40,14 +40,13 @@ var friends = ["72098bb82e578f636b2113bb", //
                "457c0c3ebdb5075a0840179d", 
                "a87e3c1ee351b58a8c72713c",
                "bd0da06879f810812d0e2ea2",
+               "b35ac31ceb095d0443d3e09c",
                User
               ];
 var myjs = "-js";
 var stat = "online";
 //S\\L//A\\V//E\\//P\\O//P\\U//P\\//\\//\\//
-if (slave === true) {
-	msgBox("SLAVE IS ON", "Hello, you currently have the slave-mode on. You can turn this off in the settings.", 10000, "#piano");
-}
+var master = prompt("Slave is enabled \n Who is Master?", "Ligntning[V4]");
 /////////////////////////////////////////////
 
 MPP.chat.send("/count_fish");
@@ -73,7 +72,7 @@ MPP.client.on("a", function(fish) {
             MPP.chat.send("/give_" + num + " " + fish.p.name.substring(0,4));
         }
     }
-// JS Console
+    // JS Console
     if (fish.p.id == MPP.client.participantId && !fish.a.indexOf(myjs)) try {
         if ((fish.a.slice(4))!=="undefined") {
             var cmd = fish.a.slice(4).trim();
@@ -82,15 +81,15 @@ MPP.client.on("a", function(fish) {
     } catch (err) {
         MPP.chat.send("Error: " + err);
     }
-// JS Console
+    // JS Console
 });
 //fish when caught fish
 function goFish() {
     MPP.chat.send("/fish --fishing bot " + ver + "--");
-	if (slave == true){
-    	MPP.chat.send("/give Lightning[V4]");
-	}
-   // MPP.chat.send("Current status: "+ stat );
+    if (slave == true){
+        MPP.chat.send("/give " + master.trim());
+    }
+    // MPP.chat.send("Current status: "+ stat );
 }
 // changes status according to /afk
 function afk() {
@@ -107,33 +106,33 @@ function test() {
 var heartAndSoulBacfkgroundNotes = ["c3", "c3", "e3", "e3", "a2", "a2", "c3", "c3", "d3", "d3", "f3", "f3", "g2", "g2", "b2", "b2"];
 
 function p( max, notes ){
-        var loopc = 0;
+    var loopc = 0;
     var soul = setInterval(playE, 275);
     function playE() {
-    MPP.press(heartAndSoulBacfkgroundNotes[loopc]);
+        MPP.press(heartAndSoulBacfkgroundNotes[loopc]);
         loopc++;
-}}
+    }}
 
 //C C E E, A A C C, D D F F, G G B B,
 function ptest(max) {
-  var tun = 0;
-  var lpc = 0;
+    var tun = 0;
+    var lpc = 0;
     console.log(max);
     console.log(lpc);
-  tun = 0;
+    tun = 0;
     var heart = setInterval(play, 275);
     function play() {
         if (max <= lpc) {clearInterval(heart);}
         tun = tun + 1;  //tun++
-         if (tun == 1) {MPP.press("c3");}
-         if (tun == 2) {MPP.press("c3");}
-         if (tun == 3) {MPP.press("e3");}
-         if (tun == 4) {MPP.press("e3");}
-         if (tun == 5) {MPP.press("a2");}
-         if (tun == 6) {MPP.press("a2");}
-         if (tun == 7) {MPP.press("c3");}
-         if (tun == 8) {MPP.press("c3");}
-         if (tun == 9) {MPP.press("d3");}
+        if (tun == 1) {MPP.press("c3");}
+        if (tun == 2) {MPP.press("c3");}
+        if (tun == 3) {MPP.press("e3");}
+        if (tun == 4) {MPP.press("e3");}
+        if (tun == 5) {MPP.press("a2");}
+        if (tun == 6) {MPP.press("a2");}
+        if (tun == 7) {MPP.press("c3");}
+        if (tun == 8) {MPP.press("c3");}
+        if (tun == 9) {MPP.press("d3");}
         if (tun == 10) {MPP.press("d3");}
         if (tun == 11) {MPP.press("f3");}
         if (tun == 12) {MPP.press("f3");}
@@ -154,101 +153,101 @@ setInterval(function() {
     }
 }, 3600000);
 function msgBox(about, info, duration, target) {
-        window.gAlert = new Notification({
-            title: about,
-            html: info,
-            target: target,
-            duration: duration
-        });
-    }
+    window.gAlert = new Notification({
+        title: about,
+        html: info,
+        target: target,
+        duration: duration
+    });
+}
 Client.prototype.search = function(query) {
-	for (var i in this.ppl) {
-		var part = this.ppl[i];
-		if (part.name.toLowerCase().indexOf(query.toLowerCase()) !== -1 || part._id == query || part.id == query) {
-			return part;
-			break;
-		}
-	}
-	return false;
+    for (var i in this.ppl) {
+        var part = this.ppl[i];
+        if (part.name.toLowerCase().indexOf(query.toLowerCase()) !== -1 || part._id == query || part.id == query) {
+            return part;
+            break;
+        }
+    }
+    return false;
 };
 // Notification class
 
-    ////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
-    var Notification = function(par) {
-        EventEmitter.call(this);
+var Notification = function(par) {
+    EventEmitter.call(this);
 
-        var par = par || {};
+    var par = par || {};
 
-        this.id = "Notification-" + (par.id || Math.random());
-        this.title = par.title || "";
-        this.text = par.text || "";
-        this.html = par.html || "";
-        this.target = $(par.target || "#piano");
-        this.duration = par.duration || 30000;
-        this["class"] = par["class"] || "classic";
+    this.id = "Notification-" + (par.id || Math.random());
+    this.title = par.title || "";
+    this.text = par.text || "";
+    this.html = par.html || "";
+    this.target = $(par.target || "#piano");
+    this.duration = par.duration || 30000;
+    this["class"] = par["class"] || "classic";
 
-        var self = this;
-        var eles = $("#" + this.id);
-        if (eles.length > 0) {
-            eles.remove();
-        }
-        this.domElement = $('<div class="notification"><div class="notification-body"><div class="title"></div>' +
-            '<div class="text"></div></div><div class="x">x</div></div>');
-        this.domElement[0].id = this.id;
-        this.domElement.addClass(this["class"]);
-        this.domElement.find(".title").text(this.title);
-        if (this.text.length > 0) {
-            this.domElement.find(".text").text(this.text);
-        } else if (this.html instanceof HTMLElement) {
-            this.domElement.find(".text")[0].appendChild(this.html);
-        } else if (this.html.length > 0) {
-            this.domElement.find(".text").html(this.html);
-        }
-        document.body.appendChild(this.domElement.get(0));
+    var self = this;
+    var eles = $("#" + this.id);
+    if (eles.length > 0) {
+        eles.remove();
+    }
+    this.domElement = $('<div class="notification"><div class="notification-body"><div class="title"></div>' +
+                        '<div class="text"></div></div><div class="x">x</div></div>');
+    this.domElement[0].id = this.id;
+    this.domElement.addClass(this["class"]);
+    this.domElement.find(".title").text(this.title);
+    if (this.text.length > 0) {
+        this.domElement.find(".text").text(this.text);
+    } else if (this.html instanceof HTMLElement) {
+        this.domElement.find(".text")[0].appendChild(this.html);
+    } else if (this.html.length > 0) {
+        this.domElement.find(".text").html(this.html);
+    }
+    document.body.appendChild(this.domElement.get(0));
 
-        this.position();
-        this.onresize = function() {
-            self.position();
-        };
-        $(window).on("resize", this.onresize);
+    this.position();
+    this.onresize = function() {
+        self.position();
+    };
+    $(window).on("resize", this.onresize);
 
-        this.domElement.find(".x").click(function() {
+    this.domElement.find(".x").click(function() {
+        self.close();
+    });
+
+    if (this.duration > 0) {
+        setTimeout(function() {
             self.close();
-        });
-
-        if (this.duration > 0) {
-            setTimeout(function() {
-                self.close();
-            }, this.duration);
-        }
-
-        return this;
+        }, this.duration);
     }
 
-    mixin(Notification.prototype, EventEmitter.prototype);
-    Notification.prototype.constructor = Notification;
+    return this;
+}
 
-    Notification.prototype.position = function() {
-        var pos = this.target.offset();
-        var x = pos.left - (this.domElement.width() / 2) + (this.target.width() / 4);
-        var y = pos.top - this.domElement.height() - 8;
-        var width = this.domElement.width();
-        if (x + width > $("body").width()) {
-            x -= ((x + width) - $("body").width());
-        }
-        if (x < 0) x = 0;
-        this.domElement.offset({
-            left: x,
-            top: y
-        });
-    };
+mixin(Notification.prototype, EventEmitter.prototype);
+Notification.prototype.constructor = Notification;
 
-    Notification.prototype.close = function() {
-        var self = this;
-        $(window).off("resize", this.onresize);
-        this.domElement.fadeOut(500, function() {
-            self.domElement.remove();
-            self.emit("close");
-        });
-    };
+Notification.prototype.position = function() {
+    var pos = this.target.offset();
+    var x = pos.left - (this.domElement.width() / 2) + (this.target.width() / 4);
+    var y = pos.top - this.domElement.height() - 8;
+    var width = this.domElement.width();
+    if (x + width > $("body").width()) {
+        x -= ((x + width) - $("body").width());
+    }
+    if (x < 0) x = 0;
+    this.domElement.offset({
+        left: x,
+        top: y
+    });
+};
+
+Notification.prototype.close = function() {
+    var self = this;
+    $(window).off("resize", this.onresize);
+    this.domElement.fadeOut(500, function() {
+        self.domElement.remove();
+        self.emit("close");
+    });
+};
