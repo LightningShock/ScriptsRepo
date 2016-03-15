@@ -10,24 +10,34 @@ var user = {
 };
 
 
-
+try {
 wss.on('connection', function connection(ws) {
     console.log("Connection Recieved from: " + ws.upgradeReq.connection.remoteAddress);
-    var ip = ws.upgradeReq.connection.remoteAddress;
+    var ip = ws.upgradeReq.headers['x-forwarded-for'] || ws.upgradeReq.connection.remoteAddress;
+    console.log(ip);
     //if ()
         ws.on('message', function incoming(message) {
             console.log('received: %s', message);
+            wss.broadcast(message);
             var mesg = message.toLowerCase();
+            try {
             var msg = JSON.parse(mesg);
-            console.log(msg);
             if (msg.m == "dig") {
                 ws.send("start dig");
                 wss.broadcast("test");
             }
+            } catch(err) { 
+                console.log(err);
+            }
+            console.log(msg);
+            
         });
 
-    ws.send('something');
+    ws.send('hi');
 });
+} catch (err) {
+    console.error(err);
+}
 
 //functions//functions//functions//functions//functions//
 
@@ -49,26 +59,32 @@ wss.broadcast = function broadcast(data) {
 
 //functions//
 var WebSocket = require("ws");
-var client = new WebSocket('ws://testing--youtubrer.c9users.io:8080');
+var client = new WebSocket('ws://127.0.0.1:8080');
 var iface = require("readline").createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
 iface.on("line", function(line) {
+    try {
     var args = line.split(" ");
     var cmd = args[0].toLowerCase();
-    var mesg = args.splice(1).join(" ");
+    var mesg = args.join(" ");
     if (cmd == "/send") {
-        wss.broadcast(mesg);
+        wss.broadcast([{m: 'a', message: mesg}]);
     }
     else {
         var msg = {
-            c: line,
+            m: 'a', message: mesg,
         };
-        client.send(JSON.stringify(msg));
+        msg = JSON.stringify(msg);
+        client.send(msg);
+    }
+    }catch(e){
+        console.error(e);
     }
 });
+
 client.on('message', function(message) {
     console.log("message: " + message);
 });
